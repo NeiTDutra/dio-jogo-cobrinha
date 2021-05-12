@@ -20,14 +20,24 @@ function makeBG() {
 
 function makeSnake() {
     for(i = 0; i < snake.length; i++){
+        context.strokeStyle = "green";
         context.fillStyle = "green";
-        context.fillRect(snake[i].x, snake[i].y, box, box);
+        context.beginPath();
+        context.arc(snake[i].x, snake[i].y, box / 2, 0, 2 * Math.PI);
+        if(snake[0].x && snake[0].y) {
+            context.stroke();
+        }
+        else {
+            context.fill();
+        }
     }
 }
 
 function drawFood (){
     context.fillStyle = "red";
-    context.fillRect(food.x, food.y, box, box);
+    context.beginPath();
+    context.arc(food.x, food.y, box / 2, 0, 2 * Math.PI);
+    context.fill();
 }
 
 document.addEventListener('keydown', update);
@@ -50,6 +60,7 @@ function startPlay(){
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
             clearInterval(jogo);
             alert('Game Over :(');
+            document.getElementById('btn').style.display = 'block';
         }
     }
 
@@ -85,3 +96,7 @@ function startPlay(){
 }
 
 let jogo = setInterval(startPlay, 100);
+
+function restart() {
+    document.location.reload(true);
+}
